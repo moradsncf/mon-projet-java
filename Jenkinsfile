@@ -17,10 +17,11 @@ pipeline {
             }
         }
     }
-}
-post{
-    success {
-        echo "ca a fonctionné"
-        archiveArtifacts artifacts: 'target/mon-projet-java-1.0-SNAPSHOT.jar', fingerprint: true
+
+    post {
+        success {
+            echo "ca a fonctionné"
+            archiveArtifacts artifacts: 'target/mon-projet-java-1.0-SNAPSHOT.jar', fingerprint: true
+        }
     }
 }
