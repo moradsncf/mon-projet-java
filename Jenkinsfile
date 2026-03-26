@@ -1,10 +1,15 @@
 pipeline {
-    agent any
+    agent { label 'testpipelinemorad' }
     
     tools {
         maven 'M3'
     }
 
+    environment {
+        IMG="mon-projet-java:${env.BUILD_ID}"
+        CT_name="mon-projet-java-container"
+    }
+    
     stages {
         stage('Compilation') {
             steps {
