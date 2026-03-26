@@ -6,7 +6,7 @@ pipeline {
     }
 
     environment {
-        IMG="mon-projet-java:${env.BUILD_ID}"
+        IMG="mon-projet-java:${env.BUILD_NUMBER}"
         CT_name="mon-projet-java-container"
     }
     
