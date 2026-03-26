@@ -16,12 +16,21 @@ pipeline {
                 sh 'mvn clean package'
             }
         }
-        stage('execution') {
+        stage('Build docker image'){
             steps {
-                sh 'java -jar target/mon-projet-java-1.0-SNAPSHOT.jar'
+                sh "docker build -t ${IMG}"
+            }
+        }
+        
+        stage('deploiment'){
+            steps {
+                sh "docker stop ${CT_name} || true"
+                sh "docker rm ${CT_NAME} || true"
+                sh "docker run -d --name ${CT_NAME} ${IMG}"
             }
         }
     }
+        
 
     post {
         success {
