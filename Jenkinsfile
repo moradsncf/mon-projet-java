@@ -1,5 +1,5 @@
 pipeline {
-    agent { label 'vm-a-tout-faire' }
+    agent { label 'vm-morad1' }
 
     tools {
         maven 'M3'
@@ -9,7 +9,7 @@ pipeline {
         IMG="mon-projet-java-mathieu:${env.BUILD_NUMBER}"
         CT_NAME="mon-projet-java-mathieu-container"
         URL_NOTIFICATIONS="https://ntfy.sh/1x6DHZYwBpRxKUJF"
-        SONAR_PRJ_KEY="projet-mathieu"
+        SONAR_PRJ_KEY="projet-morad"
     }
 
     stages {
