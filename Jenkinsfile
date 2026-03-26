@@ -1,5 +1,5 @@
 pipeline {
-    agent { label 'testpipelinemorad' }
+    agent { label 'vm-morad1' }
     
     tools {
         maven 'M3'
