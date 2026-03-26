@@ -6,12 +6,12 @@ pipeline {
     }
 
     environment {
-        IMG="mon-projet-java:${env.BUILD_NUMBER}"
-        CT_name="mon-projet-java-container"
+        IMG="mon-projet-java-morad:${env.BUILD_NUMBER}"
+        CT_name="mon-projet-java-morad-container"
     }
     
     stages {
-        stage('Compilation') {
+        stage('Compilation du projet') {
             steps {
                 sh 'mvn clean package'
             }
