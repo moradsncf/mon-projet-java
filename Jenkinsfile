@@ -1,48 +1,51 @@
 pipeline {
-    agent { label 'vm-morad1' }
-    
+    agent { label 'vm-a-tout-faire' }
+
     tools {
         maven 'M3'
     }
 
     environment {
-        IMG="mon-projet-java-morad:${env.BUILD_NUMBER}"
-        CT_name="mon-projet-java-morad-container"
-        URL_NOTIFICATIONS="https://ntfy.sh/k3TJPVH2g4mBcLpE"
+        IMG="mon-projet-java-mathieu:${env.BUILD_NUMBER}"
+        CT_NAME="mon-projet-java-mathieu-container"
+        URL_NOTIFICATIONS="https://ntfy.sh/1x6DHZYwBpRxKUJF"
+        SONAR_PRJ_KEY="projet-mathieu"
     }
-    
-    stages {
 
-            stage('SonarQube Analysis') {
-            def mvn = tool 'Default Maven';
-            withSonarQubeEnv() {
-              sh "${mvn}/bin/mvn clean verify org.sonarsource.scanner.maven:sonar-maven-plugin:sonar -Dsonar.projectKey=projet-mathieu -Dsonar.projectName='projet-mathieu'"
-            }
-        }
-        
+    stages {
         stage('Compilation du projet') {
             steps {
-                sh 'mvn clean package'
+                sh 'mvn clean verify'
             }
         }
-        
-        stage('Build docker image'){
+
+        stage('Analyse sonar') {
+            steps {
+                withSonarQubeEnv('SonarqubeSNCF') {
+                    sh """
+                    mvn sonar:sonar \
+                    -Dsonar.projectKey=${SONAR_PRJ_KEY} \
+                    -Dsonar.projectName=${SONAR_PRJ_KEY}
+                    """
+                }
+            }
+        }
+
+        stage('Build docker image') {
             steps {
                 sh "docker build -t ${IMG} ."
             }
         }
-        
-        stage('deploiment'){
+
+        stage('deploiement') {
             steps {
-                sh "docker stop ${CT_name} || true"
+                sh "docker stop ${CT_NAME} || true"
                 sh "docker rm ${CT_NAME} || true"
                 sh "docker run -d --name ${CT_NAME} ${IMG}"
             }
         }
     }
-        
 
-    
     post {
         success {
             script {
@@ -71,3 +74,4 @@ pipeline {
         }
     }
 }
+ 
