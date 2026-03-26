@@ -6,7 +6,7 @@ pipeline {
     }
 
     environment {
-        IMG="mon-projet-java-mathieu:${env.BUILD_NUMBER}"
+        IMG="mon-projet-java-morad:${env.BUILD_NUMBER}"
         CT_NAME="mon-projet-java-morad-container"
         URL_NOTIFICATIONS="https://ntfy.sh/k3TJPVH2g4mBcLpE"
         SONAR_PRJ_KEY="projet-morad"
